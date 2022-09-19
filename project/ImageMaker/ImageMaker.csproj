@@ -10,11 +10,15 @@
   <ItemGroup>
     <None Remove="Resources\dressRes1.png" />
     <None Remove="Resources\dressRes2.png" />
+    <None Remove="Resources\dressRes3.png" />
+    <None Remove="Resources\dressRes4.png" />
   </ItemGroup>
 
   <ItemGroup>
     <Resource Include="Resources\dressRes1.png" />
     <Resource Include="Resources\dressRes2.png" />
+    <Resource Include="Resources\dressRes3.png" />
+    <Resource Include="Resources\dressRes4.png" />
   </ItemGroup>
 
 </Project>

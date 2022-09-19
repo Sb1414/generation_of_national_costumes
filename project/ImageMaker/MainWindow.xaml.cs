@@ -23,9 +23,9 @@ namespace ImageMaker
     /// </summary>
     public partial class MainWindow : Window
     {
-        private List<BitmapImage> files = new List<BitmapImage>();
+        private BitmapImage userFile;
         private List<BitmapImage> resources = new List<BitmapImage>();
-        bool flag = true;
+        int counter = 0;
         public MainWindow()
         {
             InitializeComponent();
@@ -37,18 +37,41 @@ namespace ImageMaker
             OpenFileDialog openFile = new OpenFileDialog();
             if (openFile.ShowDialog() == true) 
             {
-                files.Add(getImageSourceFromFile(File.OpenRead(openFile.FileName)));
-                SelectedImagePreview.Source = files.Last();
+                userFile = getImageSourceFromFile(File.OpenRead(openFile.FileName));
+                SelectedImagePreview.Source = userFile;
             }
         }
 
         private void ResultButton_Click(object sender, RoutedEventArgs e)
         {
-            //Сейчас сделаю
 
-            ImageMaker.Source = (flag ? resources.First() : resources.Last());
 
-            flag = !flag;
+            if (userFile != null)
+            {
+                var userDrawing = new ImageDrawing();
+                userDrawing.ImageSource = userFile;
+                userDrawing.Rect = new Rect(new Size(userFile.Width, userFile.Height));
+
+                var resourceDrawing = new ImageDrawing();
+                resourceDrawing.ImageSource = resources[counter];
+                resourceDrawing.Rect = new Rect(new Size(userFile.Width, userFile.Height));
+
+                ImageMaker.Stretch = Stretch.UniformToFill;
+
+                DrawingGroup dg = new DrawingGroup();
+                //dg.Children.Add(new ImageDrawing(test, new Rect(0,0,(ImageMaker.Parent as Grid).ActualWidth, (ImageMaker.Parent as Grid).ActualHeight)));
+                dg.Children.Add(userDrawing);
+                dg.Children.Add(resourceDrawing);
+               // dg.Children.Add(new ImageDrawing(resources[counter], new Size(userFile.Width, userFile.Height));
+                
+                DrawingImage di = new DrawingImage(dg);
+                ImageMaker.Source = di;
+                counter++;
+                if (counter == resources.Count) 
+                {
+                    counter = 0;
+                }
+            }
         }
 
 
@@ -57,14 +80,15 @@ namespace ImageMaker
             BitmapImage bitmap = new BitmapImage();
             bitmap.BeginInit();
             bitmap.StreamSource = image;
+            bitmap.CacheOption = BitmapCacheOption.OnLoad;
             bitmap.EndInit();
             return bitmap;
         }
 
         private void LoadResources() 
         {
-            resources.Add(getImageSourceFromUri("dressRes1.png"));
-            resources.Add(getImageSourceFromUri("dressRes2.png"));
+            resources.Add(getImageSourceFromUri("dressRes3.png"));
+            resources.Add(getImageSourceFromUri("dressRes4.png"));
         }
 
         private BitmapImage getImageSourceFromUri(string name) 
