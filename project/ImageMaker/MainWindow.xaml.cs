@@ -44,7 +44,6 @@ namespace ImageMaker
 
         private void ResultButton_Click(object sender, RoutedEventArgs e)
         {
-            //Сейчас сделаю
 
             ImageMaker.Source = (flag ? resources.First() : resources.Last());
 
