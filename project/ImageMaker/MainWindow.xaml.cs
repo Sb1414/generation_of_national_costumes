@@ -56,7 +56,6 @@ namespace ImageMaker
                 resourceDrawing.ImageSource = resources[counter];
                 resourceDrawing.Rect = new Rect(new Size(userFile.Width, userFile.Height));
 
-                ImageMaker.Stretch = Stretch.UniformToFill;
 
                 DrawingGroup dg = new DrawingGroup();
                 //dg.Children.Add(new ImageDrawing(test, new Rect(0,0,(ImageMaker.Parent as Grid).ActualWidth, (ImageMaker.Parent as Grid).ActualHeight)));
